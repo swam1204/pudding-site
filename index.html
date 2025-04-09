@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For My Pudding</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to top right, #fff0f5, #ffe4e1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      display: none;
+    }
+
+    .entry {
+      text-align: center;
+    }
+
+    input[type="password"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #ffc0cb;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #ff69b4;
+      color: white;
+      cursor: pointer;
+    }
+
+    h1 {
+      font-size: 26px;
+      color: #8b0000;
+    }
+
+    .flowers {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .flower {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/616/616408.png');
+      background-size: cover;
+      animation: fall 8s linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="entry">
+    <h2>Enter the Secret Code</h2>
+    <input type="password" id="code" placeholder="Enter password">
+    <br>
+    <button onclick="checkPassword()">Enter</button>
+  </div>
+
+  <div class="container" id="message">
+    <h1>Hello my Pudding, would you like to go for a date with me after your work?</h1>
+    <button onclick="alert('Yay! I knew you would say yes! ❤️')">Yes</button>
+  </div>
+
+  <div class="flowers" id="flowers"></div>
+
+  <script>
+    function checkPassword() {
+      const input = document.getElementById('code').value;
+      if (input === '1014') {
+        document.querySelector('.entry').style.display = 'none';
+        document.getElementById('message').style.display = 'block';
+        generateFlowers();
+      } else {
+        alert('Oops! That's not the right code.');
+      }
+    }
+
+    function generateFlowers() {
+      const container = document.getElementById('flowers');
+      for (let i = 0; i < 30; i++) {
+        const flower = document.createElement('div');
+        flower.classList.add('flower');
+        flower.style.left = Math.random() * 100 + 'vw';
+        flower.style.animationDelay = Math.random() * 8 + 's';
+        container.appendChild(flower);
+      }
+    }
+  </script>
+</body>
+</html>
