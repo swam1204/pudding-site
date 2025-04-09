@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>For My Pudding</title>
   <style>
     body {
@@ -17,13 +17,13 @@
       overflow: hidden;
     }
 
+    .entry {
+      text-align: center;
+    }
+
     .container {
       text-align: center;
       display: none;
-    }
-
-    .entry {
-      text-align: center;
     }
 
     input[type="password"] {
@@ -84,13 +84,13 @@
 <body>
   <div class="entry">
     <h2>Enter the Secret Code</h2>
-    <input type="password" id="code" placeholder="Enter password">
-    <br>
+    <input type="password" id="code" placeholder="Enter password" />
+    <br />
     <button onclick="checkPassword()">Enter</button>
   </div>
 
   <div class="container" id="message">
-    <h1>Hello my Pudding, would you like to go for a date with me after your work?</h1>
+    <h1>Hello my Pudding, will you do me a favor after your work?</h1>
     <button onclick="alert('Yay! I knew you would say yes! ❤️')">Yes</button>
   </div>
 
@@ -104,7 +104,7 @@
         document.getElementById('message').style.display = 'block';
         generateFlowers();
       } else {
-        alert('Oops! That's not the right code.');
+        alert("Oops! That's not the right code.");
       }
     }
 
