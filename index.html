@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>For My Pudding</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Quicksand:wght@500&display=swap');
+
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Quicksand', sans-serif;
       background: linear-gradient(to top right, #fff0f5, #ffe4e1);
       display: flex;
       justify-content: center;
@@ -31,23 +33,23 @@
 
     button {
       margin-top: 10px;
-      padding: 10px 20px;
+      padding: 10px 25px;
       font-size: 16px;
       border: none;
-      border-radius: 5px;
+      border-radius: 10px;
       background-color: #ff69b4;
       color: white;
       cursor: pointer;
+      font-family: 'Cherry Bomb One', cursive;
     }
 
-    h1 {
-      font-size: 26px;
+    h1, h2, p {
       color: #8b0000;
     }
 
     .emoji {
       position: absolute;
-      font-size: 24px;
+      font-size: 26px;
       animation: fall 8s linear infinite;
     }
 
@@ -75,8 +77,8 @@
 
     .container {
       display: none;
-      width: 100%;
-      padding: 20px;
+      width: 90%;
+      max-width: 600px;
     }
 
     .surprise {
@@ -86,7 +88,34 @@
       height: 100vh;
       z-index: 999;
       text-align: center;
-      padding-top: 30vh;
+      padding-top: 20vh;
+    }
+
+    .dancer {
+      width: 160px;
+      margin-top: 30px;
+      border-radius: 20px;
+    }
+
+    .envelope {
+      background: #fff;
+      padding: 20px;
+      border: 2px solid #ffb6c1;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      animation: popin 1.2s ease-out;
+    }
+
+    @keyframes popin {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    .cute-note {
+      font-size: 14px;
+      color: #d63384;
+      margin-top: 12px;
+      font-style: italic;
     }
   </style>
 </head>
@@ -99,15 +128,20 @@
   </div>
 
   <div class="container" id="message">
-    <h1>Hello my Pudding, would you like to go for a date with me after your work?</h1>
-    <button onclick="showSurprise()">Yes</button>
-    <p style="font-size: 14px; color: #444; margin-top: 10px;">
-      What are you looking for? There is no "No" option here!!!
-    </p>
+    <div class="envelope">
+      <h1 style="font-family: 'Cherry Bomb One', cursive; font-size: 24px;">
+        Hello my Pudding, would you like to go for a date with me after your work?
+      </h1>
+      <button onclick="showSurprise()">Yes</button>
+      <p class="cute-note">What are you looking for? There is no "No" option here!!!</p>
+    </div>
   </div>
 
   <div class="surprise" id="surprise">
-    <h1 style="color: #d63384;">I knew you would say yes 💖</h1>
+    <h1 style="font-family: 'Cherry Bomb One', cursive; color: #d63384;">
+      I knew you would say yes 💖
+    </h1>
+    <img class="dancer" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Dancing Cat" />
   </div>
 
   <div class="flowers" id="flowers"></div>
@@ -140,6 +174,7 @@
     function showSurprise() {
       document.getElementById('message').style.display = 'none';
       document.getElementById('surprise').style.display = 'block';
+      generateFlowers();
     }
   </script>
 </body>
