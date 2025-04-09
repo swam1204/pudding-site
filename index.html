@@ -17,36 +17,9 @@
       overflow: hidden;
     }
 
-    .entry {
+    .entry, .container, .surprise {
       text-align: center;
-    }
-
-    .container {
-      text-align: center;
-      display: none;
-    }
-
-    .typewriter {
-      display: inline-block;
-      overflow: hidden;
-      border-right: .15em solid #8b0000;
-      white-space: nowrap;
-      animation:
-        typing 3.5s steps(40, end),
-        blink-caret .75s step-end infinite;
-      font-size: 26px;
-      color: #8b0000;
-      margin-bottom: 20px;
-    }
-
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-
-    @keyframes blink-caret {
-      from, to { border-color: transparent }
-      50% { border-color: #8b0000; }
+      position: absolute;
     }
 
     input[type="password"] {
@@ -67,23 +40,14 @@
       cursor: pointer;
     }
 
-    .flowers {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: -1;
+    h1 {
+      font-size: 26px;
+      color: #8b0000;
     }
 
-    .flower {
+    .emoji {
       position: absolute;
-      width: 30px;
-      height: 30px;
-      background-image: url('https://cdn-icons-png.flaticon.com/512/616/616408.png');
-      background-size: cover;
+      font-size: 24px;
       animation: fall 8s linear infinite;
     }
 
@@ -97,14 +61,36 @@
         opacity: 0;
       }
     }
+
+    .flowers {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .container {
+      display: none;
+      width: 100%;
+      padding: 20px;
+    }
+
+    .surprise {
+      display: none;
+      background: linear-gradient(to top right, #fff0f5, #ffe4e1);
+      width: 100vw;
+      height: 100vh;
+      z-index: 999;
+      text-align: center;
+      padding-top: 30vh;
+    }
   </style>
 </head>
 <body>
-  <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/11/03/audio_36b1b9b14c.mp3?filename=romantic-piano-12480.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-
   <div class="entry">
     <h2>Enter the Secret Code</h2>
     <input type="password" id="code" placeholder="Enter password" />
@@ -113,9 +99,15 @@
   </div>
 
   <div class="container" id="message">
-    <div class="typewriter">Hello my Pudding, would you like to go for a date with me after your work?</div>
-    <br />
-    <button onclick="alert('Yay! I knew you would say yes! ❤️')">Yes</button>
+    <h1>Hello my Pudding, would you like to go for a date with me after your work?</h1>
+    <button onclick="showSurprise()">Yes</button>
+    <p style="font-size: 14px; color: #444; margin-top: 10px;">
+      What are you looking for? There is no "No" option here!!!
+    </p>
+  </div>
+
+  <div class="surprise" id="surprise">
+    <h1 style="color: #d63384;">I knew you would say yes 💖</h1>
   </div>
 
   <div class="flowers" id="flowers"></div>
@@ -134,13 +126,20 @@
 
     function generateFlowers() {
       const container = document.getElementById('flowers');
+      const emojis = ['💕', '🌸'];
       for (let i = 0; i < 30; i++) {
-        const flower = document.createElement('div');
-        flower.classList.add('flower');
-        flower.style.left = Math.random() * 100 + 'vw';
-        flower.style.animationDelay = Math.random() * 8 + 's';
-        container.appendChild(flower);
+        const emoji = document.createElement('div');
+        emoji.classList.add('emoji');
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = Math.random() * 100 + 'vw';
+        emoji.style.animationDelay = Math.random() * 8 + 's';
+        container.appendChild(emoji);
       }
+    }
+
+    function showSurprise() {
+      document.getElementById('message').style.display = 'none';
+      document.getElementById('surprise').style.display = 'block';
     }
   </script>
 </body>
