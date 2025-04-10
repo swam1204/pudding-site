@@ -11,12 +11,16 @@
       margin: 0;
       padding: 0;
       font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(to top right, #fff0f5, #ffe4e1);
+      background: #fff0f5;
+      background-image: url('https://i.imgur.com/hZ6IgKj.png'); /* sparkly background */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      overflow: hidden;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      overflow: hidden;
     }
 
     .entry, .container, .surprise {
@@ -43,25 +47,10 @@
       font-family: 'Cherry Bomb One', cursive;
     }
 
-    h1, h2, p {
-      color: #8b0000;
-    }
-
     .emoji {
       position: absolute;
       font-size: 26px;
       animation: fall 8s linear infinite;
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(-100px) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-      }
     }
 
     .flowers {
@@ -75,10 +64,30 @@
       z-index: -1;
     }
 
-    .container {
+    .envelope-img {
+      width: 150px;
+      cursor: pointer;
+      animation: popin 1s ease-out;
+    }
+
+    @keyframes popin {
+      from { transform: scale(0.6); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .hidden {
       display: none;
+    }
+
+    .message-box {
+      margin-top: 20px;
+      background: #fff;
+      border: 2px solid #ffc0cb;
+      border-radius: 12px;
+      padding: 20px;
       width: 90%;
       max-width: 600px;
+      animation: popin 1s ease-out;
     }
 
     .surprise {
@@ -94,37 +103,21 @@
     .dancer {
       width: 200px;
       margin-top: 30px;
-      border-radius: 20px;
     }
 
-    .envelope {
-      background: #fff;
-      padding: 20px;
-      border: 2px solid #ffb6c1;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-      animation: popin 1.2s ease-out;
+    #countdownBtn {
+      display: none;
+      margin-top: 20px;
     }
 
-    @keyframes popin {
-      from { transform: scale(0.5); opacity: 0; }
-      to   { transform: scale(1); opacity: 1; }
-    }
-
-    .cute-note {
-      font-size: 14px;
+    h1 {
+      font-family: 'Cherry Bomb One', cursive;
       color: #d63384;
-      margin-top: 12px;
-      font-style: italic;
     }
 
     .fade-in {
       opacity: 0;
       transition: opacity 2s ease-in;
-      font-size: 22px;
-      color: #e91e63;
-      margin-top: 20px;
-      font-family: 'Cherry Bomb One', cursive;
     }
 
     .fade-in.show {
@@ -134,28 +127,29 @@
 </head>
 <body>
   <div class="entry">
-    <h2>Enter the Secret Code</h2>
+    <h2 style="font-family: 'Cherry Bomb One', cursive;">Enter the Secret Code</h2>
     <input type="password" id="code" placeholder="Enter password" />
     <br />
     <button onclick="checkPassword()">Enter</button>
   </div>
 
-  <div class="container" id="message">
-    <div class="envelope">
-      <h1 style="font-family: 'Cherry Bomb One', cursive; font-size: 24px;">
-        Hello my Pudding, would you like to go for a date with me after your work?
-      </h1>
+  <div class="container hidden" id="envelopeStage">
+    <img class="envelope-img" src="https://i.imgur.com/Y8pRZfj.png" alt="Envelope" onclick="openEnvelope()" />
+  </div>
+
+  <div class="container hidden" id="messageBox">
+    <div class="message-box">
+      <h1>Hello my Pudding, would you like to go for a date with me after your work?</h1>
       <button onclick="showSurprise()">Yes</button>
-      <p class="cute-note">What are you looking for? There is no "No" option here!!!</p>
+      <p style="font-size: 14px; color: #d63384;">What are you looking for? There is no "No" option here!!!</p>
     </div>
   </div>
 
   <div class="surprise" id="surprise">
-    <h1 style="font-family: 'Cherry Bomb One', cursive; color: #d63384;">
-      I knew you would say yes 💖
-    </h1>
+    <h1>I knew you would say yes 💖</h1>
     <img class="dancer" src="https://media.giphy.com/media/Pt4ARBAFoiTRuIEWkZ/giphy.gif" alt="I Love You Cat" />
     <p id="finalMessage" class="fade-in">See you soon!</p>
+    <button id="countdownBtn" onclick="location.href='countdown.html'">See Countdown</button>
   </div>
 
   <div class="flowers" id="flowers"></div>
@@ -165,14 +159,19 @@
       const input = document.getElementById('code').value;
       if (input === '1014') {
         document.querySelector('.entry').style.display = 'none';
-        document.getElementById('message').style.display = 'block';
-        generateFlowers();
+        document.getElementById('envelopeStage').classList.remove('hidden');
       } else {
         alert("Oops! That's not the right code.");
       }
     }
 
-    function generateFlowers() {
+    function openEnvelope() {
+      document.getElementById('envelopeStage').classList.add('hidden');
+      document.getElementById('messageBox').classList.remove('hidden');
+      generateEmojis();
+    }
+
+    function generateEmojis() {
       const container = document.getElementById('flowers');
       const emojis = ['💕', '🌸'];
       for (let i = 0; i < 30; i++) {
@@ -186,14 +185,12 @@
     }
 
     function showSurprise() {
-      document.getElementById('message').style.display = 'none';
+      document.getElementById('messageBox').style.display = 'none';
       document.getElementById('surprise').style.display = 'block';
-      generateFlowers();
-
-      // Reveal "See you soon!" after 3 seconds
+      document.getElementById('finalMessage').classList.add('show');
       setTimeout(() => {
-        document.getElementById('finalMessage').classList.add('show');
-      }, 3000);
+        document.getElementById('countdownBtn').style.display = 'inline-block';
+      }, 1000);
     }
   </script>
 </body>
