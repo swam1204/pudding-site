@@ -12,20 +12,18 @@
       padding: 0;
       font-family: 'Quicksand', sans-serif;
       background: #fff0f5;
-      background-image: url('https://i.imgur.com/hZ6IgKj.png'); /* sparkly background */
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
       overflow: hidden;
-      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
     }
 
-    .entry, .container, .surprise {
-      text-align: center;
-      position: absolute;
+    .gif-top {
+      width: 200px;
+      margin-bottom: 20px;
     }
 
     input[type="password"] {
@@ -47,62 +45,35 @@
       font-family: 'Cherry Bomb One', cursive;
     }
 
-    .emoji {
-      position: absolute;
-      font-size: 26px;
-      animation: fall 8s linear infinite;
-    }
-
-    .flowers {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: -1;
-    }
-
-    .envelope-img {
-      width: 150px;
-      cursor: pointer;
-      animation: popin 1s ease-out;
-    }
-
-    @keyframes popin {
-      from { transform: scale(0.6); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .hidden {
+    .container, .surprise {
       display: none;
     }
 
-    .message-box {
-      margin-top: 20px;
-      background: #fff;
-      border: 2px solid #ffc0cb;
-      border-radius: 12px;
-      padding: 20px;
-      width: 90%;
-      max-width: 600px;
-      animation: popin 1s ease-out;
+    .fade {
+      opacity: 0;
+      transition: opacity 1.5s ease-in;
+    }
+
+    .fade.show {
+      opacity: 1;
     }
 
     .surprise {
-      display: none;
       background: linear-gradient(to top right, #fff0f5, #ffe4e1);
       width: 100vw;
       height: 100vh;
       z-index: 999;
       text-align: center;
-      padding-top: 20vh;
+      padding-top: 15vh;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
-    .dancer {
-      width: 200px;
-      margin-top: 30px;
+    .gif-pig {
+      width: 180px;
+      margin: 20px auto;
+      display: block;
     }
 
     #countdownBtn {
@@ -115,79 +86,52 @@
       color: #d63384;
     }
 
-    .fade-in {
-      opacity: 0;
-      transition: opacity 2s ease-in;
-    }
-
-    .fade-in.show {
-      opacity: 1;
+    p.note {
+      font-size: 14px;
+      color: #d63384;
+      font-style: italic;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <div class="entry">
+    <img class="gif-top" src="https://media.giphy.com/media/XHkUtMuvwo0L6QdGF6/giphy.gif" alt="Cute Gif" />
     <h2 style="font-family: 'Cherry Bomb One', cursive;">Enter the Secret Code</h2>
     <input type="password" id="code" placeholder="Enter password" />
     <br />
     <button onclick="checkPassword()">Enter</button>
   </div>
 
-  <div class="container hidden" id="envelopeStage">
-    <img class="envelope-img" src="https://i.imgur.com/Y8pRZfj.png" alt="Envelope" onclick="openEnvelope()" />
-  </div>
-
-  <div class="container hidden" id="messageBox">
-    <div class="message-box">
-      <h1>Hello my Pudding, would you like to go for a date with me after your work?</h1>
-      <button onclick="showSurprise()">Yes</button>
-      <p style="font-size: 14px; color: #d63384;">What are you looking for? There is no "No" option here!!!</p>
-    </div>
+  <div class="container" id="messageSection">
+    <h1 id="msg" class="fade">Hello My Pudding, do you want me to come over your home after work?</h1>
+    <button id="yesBtn" class="fade" onclick="showSurprise()">Yes</button>
+    <p id="noMsg" class="fade note">What are you looking for? There is no "No" option here!!!</p>
   </div>
 
   <div class="surprise" id="surprise">
-    <h1>I knew you would say yes 💖</h1>
-    <img class="dancer" src="https://media.giphy.com/media/Pt4ARBAFoiTRuIEWkZ/giphy.gif" alt="I Love You Cat" />
-    <p id="finalMessage" class="fade-in">See you soon!</p>
+    <h1>I knew you would say yes 💖<br>I knew you missed me already</h1>
+    <img class="gif-pig" src="https://media.giphy.com/media/VcBBHbL7thOY9ecL80/giphy.gif" alt="Pig Gif" />
     <button id="countdownBtn" onclick="location.href='countdown.html'">See Countdown</button>
   </div>
-
-  <div class="flowers" id="flowers"></div>
 
   <script>
     function checkPassword() {
       const input = document.getElementById('code').value;
       if (input === '1014') {
         document.querySelector('.entry').style.display = 'none';
-        document.getElementById('envelopeStage').classList.remove('hidden');
+        document.getElementById('messageSection').style.display = 'block';
+        setTimeout(() => document.getElementById('msg').classList.add('show'), 100);
+        setTimeout(() => document.getElementById('yesBtn').classList.add('show'), 1000);
+        setTimeout(() => document.getElementById('noMsg').classList.add('show'), 2000);
       } else {
         alert("Oops! That's not the right code.");
       }
     }
 
-    function openEnvelope() {
-      document.getElementById('envelopeStage').classList.add('hidden');
-      document.getElementById('messageBox').classList.remove('hidden');
-      generateEmojis();
-    }
-
-    function generateEmojis() {
-      const container = document.getElementById('flowers');
-      const emojis = ['💕', '🌸'];
-      for (let i = 0; i < 30; i++) {
-        const emoji = document.createElement('div');
-        emoji.classList.add('emoji');
-        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        emoji.style.left = Math.random() * 100 + 'vw';
-        emoji.style.animationDelay = Math.random() * 8 + 's';
-        container.appendChild(emoji);
-      }
-    }
-
     function showSurprise() {
-      document.getElementById('messageBox').style.display = 'none';
+      document.getElementById('messageSection').style.display = 'none';
       document.getElementById('surprise').style.display = 'block';
-      document.getElementById('finalMessage').classList.add('show');
       setTimeout(() => {
         document.getElementById('countdownBtn').style.display = 'inline-block';
       }, 1000);
