@@ -11,7 +11,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Quicksand', sans-serif;
-      background: #fff0f5;
+      background-color: #fff0f5;
       overflow: hidden;
       display: flex;
       justify-content: center;
@@ -21,9 +21,27 @@
       text-align: center;
     }
 
-    .gif-top {
-      width: 200px;
-      margin-bottom: 20px;
+    .floating-bg {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .floating-bg span {
+      position: absolute;
+      font-size: 24px;
+      opacity: 0.6;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
     }
 
     input[type="password"] {
@@ -70,7 +88,7 @@
       left: 0;
     }
 
-    .gif-pig {
+    .gif {
       width: 180px;
       margin: 20px auto;
       display: block;
@@ -95,8 +113,9 @@
   </style>
 </head>
 <body>
+  <div class="floating-bg" id="floatingBg"></div>
+
   <div class="entry">
-    <img class="gif-top" src="https://media.giphy.com/media/XHkUtMuvwo0L6QdGF6/giphy.gif" alt="Cute Gif" />
     <h2 style="font-family: 'Cherry Bomb One', cursive;">Enter the Secret Code</h2>
     <input type="password" id="code" placeholder="Enter password" />
     <br />
@@ -106,16 +125,32 @@
   <div class="container" id="messageSection">
     <h1 id="msg" class="fade">Hello My Pudding, do you want me to come over your home after work?</h1>
     <button id="yesBtn" class="fade" onclick="showSurprise()">Yes</button>
-    <p id="noMsg" class="fade note">What are you looking for? There is no "No" option here!!!</p>
+    <p id="noMsg" class="fade note">
+      What are you looking for... Just click Yes!!!<br>
+      <img class="gif" src="https://media.tenor.com/1gkM9PbXG3gAAAAC/orange-cat-cat-hitting-cat.gif" alt="Cat hitting another cat" />
+    </p>
   </div>
 
   <div class="surprise" id="surprise">
     <h1>I knew you would say yes 💖<br>I knew you missed me already</h1>
-    <img class="gif-pig" src="https://media.giphy.com/media/VcBBHbL7thOY9ecL80/giphy.gif" alt="Pig Gif" />
+    <img class="gif" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Cat hugging and kissing" />
     <button id="countdownBtn" onclick="location.href='countdown.html'">See Countdown</button>
   </div>
 
   <script>
+    function createFloatingElements() {
+      const floatingBg = document.getElementById('floatingBg');
+      const symbols = ['⭐', '💖'];
+      for (let i = 0; i < 20; i++) {
+        const span = document.createElement('span');
+        span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        span.style.left = Math.random() * 100 + 'vw';
+        span.style.top = Math.random() * 100 + 'vh';
+        span.style.animationDuration = (Math.random() * 2 + 4) + 's';
+        floatingBg.appendChild(span);
+      }
+    }
+
     function checkPassword() {
       const input = document.getElementById('code').value;
       if (input === '1014') {
@@ -133,9 +168,6 @@
       document.getElementById('messageSection').style.display = 'none';
       document.getElementById('surprise').style.display = 'block';
       setTimeout(() => {
-        document.getElementById('countdownBtn').style.display = 'inline-block';
-      }, 1000);
-    }
-  </script>
-</body>
-</html>
+        document
+::contentReference[oaicite:0]{index=0}
+ 
