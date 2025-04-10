@@ -12,36 +12,12 @@
       padding: 0;
       font-family: 'Quicksand', sans-serif;
       background-color: #fff0f5;
-      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       flex-direction: column;
       text-align: center;
-    }
-
-    .floating-bg {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .floating-bg span {
-      position: absolute;
-      font-size: 24px;
-      opacity: 0.6;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-      100% { transform: translateY(0px); }
     }
 
     input[type="password"] {
@@ -113,8 +89,6 @@
   </style>
 </head>
 <body>
-  <div class="floating-bg" id="floatingBg"></div>
-
   <div class="entry">
     <h2 style="font-family: 'Cherry Bomb One', cursive;">Enter the Secret Code</h2>
     <input type="password" id="code" placeholder="Enter password" />
@@ -138,21 +112,8 @@
   </div>
 
   <script>
-    function createFloatingElements() {
-      const floatingBg = document.getElementById('floatingBg');
-      const symbols = ['⭐', '💖'];
-      for (let i = 0; i < 20; i++) {
-        const span = document.createElement('span');
-        span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-        span.style.left = Math.random() * 100 + 'vw';
-        span.style.top = Math.random() * 100 + 'vh';
-        span.style.animationDuration = (Math.random() * 2 + 4) + 's';
-        floatingBg.appendChild(span);
-      }
-    }
-
     function checkPassword() {
-      const input = document.getElementById('code').value;
+      const input = document.getElementById('code').value.trim();
       if (input === '1014') {
         document.querySelector('.entry').style.display = 'none';
         document.getElementById('messageSection').style.display = 'block';
@@ -168,6 +129,9 @@
       document.getElementById('messageSection').style.display = 'none';
       document.getElementById('surprise').style.display = 'block';
       setTimeout(() => {
-        document
-::contentReference[oaicite:0]{index=0}
- 
+        document.getElementById('countdownBtn').style.display = 'inline-block';
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
